@@ -1033,7 +1033,7 @@ def main():
         )
         
         # Sample data option
-        use_sample = st.checkbox("Use sample data", value=False)
+        use_sample = st.checkbox("Use sample data", value=False, key="use_sample_checkbox")
         
         if use_sample:
             st.info("Using generated sample data for demonstration")
@@ -1051,6 +1051,7 @@ def main():
             max_value=15,
             value=10,
             step=1,
+            key="lom_input",
             help="Level of Organic Maturity (typically 8-12 for most formations)"
         )
         
@@ -1059,6 +1060,7 @@ def main():
         baseline_rt_option = st.radio(
             "Select baseline method:",
             ["Auto-calculate", "Manual input"],
+            key="baseline_rt_radio",
             help="Auto: uses 5th percentile of data | Manual: enter specific value"
         )
         
@@ -1068,6 +1070,7 @@ def main():
                 min_value=0.1,
                 value=10.0,
                 step=0.5,
+                key="baseline_rt_input",
                 help="Manual baseline resistivity value for ΔlogR calculation"
             )
         else:
@@ -1078,6 +1081,7 @@ def main():
         baseline_gr_option = st.radio(
             "Select baseline method:",
             ["Auto-calculate", "Manual input"],
+            key="baseline_gr_radio",
             help="Auto: uses 5th percentile of data | Manual: enter specific value"
         )
         
@@ -1087,6 +1091,7 @@ def main():
                 min_value=0.0,
                 value=50.0,
                 step=5.0,
+                key="baseline_gr_input",
                 help="Manual baseline GR value for ΔlogR calculation"
             )
         else:
@@ -1100,12 +1105,14 @@ def main():
         toc_method = st.selectbox(
             "TOC Estimation Method",
             ['passey', 'schmoker', 'ensemble'],
+            key="toc_method_select",
             help="Method for estimating Total Organic Carbon"
         )
         
         brittleness_method = st.selectbox(
             "Brittleness Calculation Method",
             ['rickman', 'wang', 'jarvie', 'comprehensive'],
+            key="brittleness_method_select",
             help="Method for calculating Brittleness Index"
         )
         
@@ -1120,6 +1127,7 @@ def main():
             max_value=1.0,
             value=0.6,
             step=0.05,
+            key="urt_threshold_slider",
             help="Threshold for sweet spot identification"
         )
         
@@ -1129,6 +1137,7 @@ def main():
             max_value=1.0,
             value=0.4,
             step=0.05,
+            key="fhzi_threshold_slider",
             help="Threshold for sweet spot identification"
         )
         
@@ -1139,13 +1148,14 @@ def main():
         lab_file = st.file_uploader(
             "Upload lab TOC data (optional)",
             type=['csv'],
+            key="lab_file_uploader",
             help="Columns: Depth, TOC_lab"
         )
         
         st.markdown("---")
         
         # Run button
-        run_workflow = st.button("🚀 Run Workflow", type="primary", use_container_width=True)
+        run_workflow = st.button("🚀 Run Workflow", type="primary", use_container_width=True, key="run_workflow_button")
     
     # Main content
     if use_sample:
@@ -1446,7 +1456,8 @@ def main():
             data=csv,
             file_name="urt_index_results.csv",
             mime="text/csv",
-            use_container_width=True
+            use_container_width=True,
+            key="download_button"
         )
         
         # Success message
